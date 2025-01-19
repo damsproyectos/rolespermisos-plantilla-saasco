@@ -1,7 +1,23 @@
 <div>
     <div class="card card-gray mb-3">
         <h3>User's Roles</h3>
-        <div class="ml-3">
+        <ul>
+            @foreach ($user->roles as $r)
+                <li>
+                    <form action="{{ route('user.delete.role', $user->id) }}" method="post">
+                        @method('delete')
+                        @csrf
+                        <input type="hidden" name="role" value="{{ $r->id }}">
+                        {{ $r->name }}
+                        <button type="submit" class="btn btn-danger btn-icon-xxs" onclick="return confirm('Are you sure?')">
+                            <i class="fas fa-trash-alt"></i>
+                        </button>
+                    </form>
+                </li>
+            @endforeach
+        </ul>
+
+        {{-- <div class="ml-3">
 
             <ul id="rolesListUser">
                 @foreach ($user->roles as $r)
@@ -17,12 +33,24 @@
                     </li>
                 @endforeach
             </ul>
-        </div>
+        </div> --}}
     </div>
 
     <h3>Assign Role</h3>
+    <form action="{{ route('user.assign.role', $user->id) }}" method="post">
+        @csrf
+        <select name="role">
+            @foreach ($roles as $r)
+                <option value="{{ $r->id }}">{{ $r->name }}</option>
+            @endforeach
+        </select>
+        {{-- <button type="button" id='buttonAssignPermission'>Send</button> --}}
+        <button type="submit">Send</button>
+    </form>
 
-    <div>
+    {{-- <h3>Assign Role</h3> --}}
+
+    {{-- <div>
         <select name="role">
             @foreach ($roles as $r)
                 <option value="{{ $r->id }}">{{ $r->name }}</option>
@@ -30,12 +58,29 @@
         </select>
 
         <button type="button" id='buttonAssignRole'>Send</button>
-    </div>
+    </div> --}}
 
     <hr class="my-3">
 
     <div class="card card-gray  mb-3">
         <h3>User's Permissions</h3>
+        <ul>
+            @foreach ($user->permissions as $p)
+                <li>
+                    <form action="{{ route('user.delete.permission', $user->id) }}" method="post">
+                        @method('delete')
+                        @csrf
+                        <input type="hidden" name="permission" value="{{ $p->id }}">
+                        {{ $p->name }}
+                        <button type="submit" class="btn btn-danger btn-icon-xxs" onclick="return confirm('Are you sure?')">
+                            <i class="fas fa-trash-alt"></i>
+                        </button>
+                    </form>
+                </li>
+            @endforeach
+        </ul>
+
+        {{--<h3>User's Permissions</h3>
         <div class="ml-3">
             <ul id="permissionListUser">
                 @foreach ($user->permissions as $p)
@@ -51,21 +96,32 @@
                     </li>
                 @endforeach
             </ul>
-        </div>
+        </div>--}}
     </div>
 
     <h3>Assign Permission</h3>
+    <form action="{{ route('user.assign.permission', $user->id) }}" method="post">
+        @csrf
+        <select name="permission">
+            @foreach ($permissions as $p)
+                <option value="{{ $p->id }}">{{ $p->name }}</option>
+            @endforeach
+        </select>
+        {{-- <button type="button" id='buttonAssignPermission'>Send</button> --}}
+        <button type="submit">Send</button>
+    </form>
 
-    @csrf
-    <select name="permission">
+    {{-- <h3>Assign Permission</h3> --}}
+    {{-- @csrf --}}
+    {{-- <select name="permission">
         @foreach ($permissions as $p)
             <option value="{{ $p->id }}">{{ $p->name }}</option>
         @endforeach
     </select>
-    <button type="button" id='buttonAssignPermission'>Send</button>
+    <button type="button" id='buttonAssignPermission'>Send</button> --}}
 </div>
 {{-- PERMISSION ADMIN --}}
-<script>
+{{-- <script>
     document.getElementById('buttonAssignPermission').addEventListener('click', function() {
         assignPermissionToUser()
     })
@@ -96,7 +152,7 @@
         axios.post('{{ route('user.assign.permission', $user->id) }}', {
             'permission': perId
         }).then((res) => {
-            document.querySelector('#permissionListUser').innerHTML += ` 
+            document.querySelector('#permissionListUser').innerHTML += `
             <li class="permission_${ res.data.id } item-list">
                 ${res.data.name}
                 <button type="button" data-per-id="${ res.data.id }" class='btn-sm btn-danger'>
@@ -112,10 +168,10 @@
             setListenerToDeletePermission()
         })
     }
-</script>
+</script> --}}
 
 {{-- ROLE ADMIN --}}
-<script>
+{{-- <script>
     document.getElementById('buttonAssignRole').addEventListener('click', function() {
         assignRoleToUser()
     })
@@ -130,7 +186,7 @@
         axios.post('{{ route('user.assign.role', $user->id) }}', {
             'role': roleId
         }).then((res) => {
-            document.querySelector('#rolesListUser').innerHTML += ` 
+            document.querySelector('#rolesListUser').innerHTML += `
             <li class="role_${ res.data.id } item-list">
                 ${res.data.name}
                 <button type="button" data-role-id="${ res.data.id }" class='btn-sm btn-danger'>
@@ -162,4 +218,4 @@
     }
 
     setListenerToDeleteRole()
-</script>
+</script> --}}

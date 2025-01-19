@@ -29,28 +29,31 @@ class Manage extends Component
         Gate::authorize('is-admin');
         $permission = Permission::findOrFail(request('permission'));
         $role->givePermissionTo($permission);
+        return redirect()->back();
 
-        if (request()->ajax()) {
-            //axios, jquery ajax fetch...
-            return response()->json($permission);
-        } else {
-            //form
-            return redirect()->back();
-        }
+        // if (request()->ajax()) {
+        //     //axios, jquery ajax fetch...
+        //     return response()->json($permission);
+        // } else {
+        //     //form
+        //     return redirect()->back();
+        // }
     }
+
 
     function delete(Role $role)
     {
         Gate::authorize('is-admin');
         $permission = Permission::findOrFail(request('permission'));
         $role->revokePermissionTo($permission);
+        return redirect()->back();
 
-        if (request()->ajax()) {
-            //axios, jquery ajax fetch...
-            return response()->json($permission);
-        } else {
-            //form
-            return redirect()->back();
-        }
+        // if (request()->ajax()) {
+        //     //axios, jquery ajax fetch...
+        //     return response()->json($permission);
+        // } else {
+        //     //form
+        //     return redirect()->back();
+        // }
     }
 }

@@ -31,14 +31,15 @@ class Manage extends Component
         Gate::authorize('is-admin');
         $role = Role::findOrFail(request('role'));
         $user->assignRole($role);
+        return redirect()->back();
 
-        if (request()->ajax()) {
-            //axios, jquery ajax fetch...
-            return response()->json($role);
-        } else {
-            //form
-            return redirect()->back();
-        }
+        // if (request()->ajax()) {
+        //     //axios, jquery ajax fetch...
+        //     return response()->json($role);
+        // } else {
+        //     //form
+        //     return redirect()->back();
+        // }
     }
 
     function deleteRole(User $user)
@@ -46,14 +47,15 @@ class Manage extends Component
         Gate::authorize('is-admin');
         $role = Role::findOrFail(request('role'));
         $user->removeRole($role);
+        return redirect()->back();
 
-        if (request()->ajax()) {
-            //axios, jquery ajax fetch...
-            return response()->json($role);
-        } else {
-            //form
-            return redirect()->back();
-        }
+        // if (request()->ajax()) {
+        //     //axios, jquery ajax fetch...
+        //     return response()->json($role);
+        // } else {
+        //     //form
+        //     return redirect()->back();
+        // }
     }
 
     //*****  PERMISSIONS
@@ -63,14 +65,15 @@ class Manage extends Component
         Gate::authorize('is-admin');
         $permission = Permission::findOrFail(request('permission'));
         $user->givePermissionTo($permission);
+        return redirect()->back();
 
-        if (request()->ajax()) {
-            //axios, jquery ajax fetch...
-            return response()->json($permission);
-        } else {
-            //form
-            return redirect()->back();
-        }
+        // if (request()->ajax()) {
+        //     //axios, jquery ajax fetch...
+        //     return response()->json($permission);
+        // } else {
+        //     //form
+        //     return redirect()->back();
+        // }
     }
 
     function deletePermission(User $user)
@@ -78,13 +81,14 @@ class Manage extends Component
         Gate::authorize('is-admin');
         $permission = Permission::findOrFail(request('permission'));
         $user->revokePermissionTo($permission);
+        return redirect()->back();
 
-        if (request()->ajax()) {
-            //axios, jquery ajax fetch...
-            return response()->json($permission);
-        } else {
-            //form
-            return redirect()->back();
-        }
+        // if (request()->ajax()) {
+        //     //axios, jquery ajax fetch...
+        //     return response()->json($permission);
+        // } else {
+        //     //form
+        //     return redirect()->back();
+        // }
     }
 }
